@@ -2,17 +2,10 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-cnt = 0
+ls = [0,1,1,2]
 
 while n != 1:
-    if n % 3 == 0:
-        n //= 3
-        cnt += 1
-    elif n% 2 == 0:
-        n //= 2
-        cnt += 1
-    else:
-        n -= 1
-        cnt += 1
-    print(n)
-print(cnt)
+    if (n-1) % 3 == 0:
+        n = (n-1)//3
+        cnt += 2
+    if 
