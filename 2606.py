@@ -1,14 +1,29 @@
-import sys
-input = sys.stdin.readline
+#BFS-like, check 2606-1.py
+
+from sys import stdin
+input = stdin.readline
 
 n = int(input())
-m = int(input())
+pair = int(input())
 
-pc = [False] * n
-pc[0] = True
-for _ in range(m):
+computers = [[] for _ in range(n+1)]
+virus = []
+
+for _ in range(pair):
     a, b = map(int, input().split())
-    if pc[a-1]:
-        pc[b-1] = True
-    
-print(pc.count(True)-1)
+    computers[a].append(b)
+    computers[b].append(a)
+
+cur = [1]
+
+while cur:
+    infected = cur.pop()
+    virus.append(infected)
+    if computers[infected]:
+        cur.extend(computers[infected])
+        computers[infected] = []
+    else:
+        continue
+
+print(len(set(virus))-1)
+
