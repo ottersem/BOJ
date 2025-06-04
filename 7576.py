@@ -44,4 +44,3 @@ if 0 in list(v[1] for row in visited for v in row):
     print(-1)
 else:
     print(visited[y][x][1] - 1)
-    
