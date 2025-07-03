@@ -20,6 +20,5 @@ for time in conf:
         cnt += 1
         start = sn
         end = se
-        print(start, end)
 
 print(cnt)
