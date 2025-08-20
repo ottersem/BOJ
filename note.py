@@ -1,49 +1,26 @@
-from collections import deque
+def female(integer, status):
+    i=1
+    num = integer
+    t=[num-1]
 
-def is_valid_move(ny, nx, n, m, maps):
-    return 0 <= ny < n and 0 <= nx < m and maps[ny][nx] != "X"
-
-def append_to_queue(ny, nx, k, time, visited, q):
-    if not visited[ny][nx][k]:
-        visited[ny][nx][k] = True
-        q.append((ny, nx, k, time + 1))
+    while True:
+        before, after = num+i-1, num-i-1
+        if after < 0 or before > len(status):
+            break
+        if status[before] == status[after]:
+            t.extend([before,after])
+        else:
+            break
         
-def solution(maps):
-    n, m = len(maps), len(maps[0])
-    visited = [[[False for _ in range(2)] for _ in range(m)] for _ in range(n)]
-    
-    dy = [-1, 1, 0, 0]
-    dx = [0, 0, -1, 1]
-    q = deque()
-    end_y, end_x = -1, -1
-    
-    for i in range(n):
-        for j in range(m):
-            if maps[i][j] == "S":
-                q.append((i,j,0,0))
-                visited[i][j][0] = True
-            if maps[i][j] == "E":
-                end_y, end_x = i,j
-                
-    while q:
-        y, x, k, time = q.popleft()
-        
-        if y == end_y and x == end_x and k == 1:
-            return time
-        
-        for i in range(4):
-            ny, nx = y + dy[i], x + dx[i]
-            
-            if not is_valid_move(ny,nx,n,m,maps):
-                continue
-            
-            if maps[ny][nx] == "L":
-                append_to_queue(ny, nx, 1, time, visited, q)
-            else:
-                append_to_queue(ny,nx,k,time,visited,q)
-                
-    return -1
+        i += 1
 
-maps = ["SOO", "OXL", "OEO"]
+    for i in t:
+        status[i] = action(status[i])
 
-print(solution(maps=maps))
+    return status
+
+def action(num):
+    if num == 0: return 1
+    else: return 0
+
+print(female(3,[0,1,1,1,0,1,0,1]))
