@@ -1,25 +1,34 @@
-from sys import stdin
-from collections import Counter
-input = stdin.readline
+import sys
+input = sys.stdin.readline
 
 n = int(input())
 
 paper = [list(map(int, input().split())) for _ in range(n)]
+blue = 0 # 1
+white = 0 # 0
 
-def cutting(paper):
-    cutted1 = paper[0:n//2+1][0:n//2+1]
-    cutted2 = paper[0:n//2+1][n//2+1:n+1]
-    cutted3 = paper[n//2+1:n+1][0:n//2+1]
-    cutted4 = paper[n//2+1:n+1][n//2+1:n+1]
+def solve(x,y,size):
+    global blue,white
 
-    return cutted1, cutted2, cutted3, cutted4
+    count = 0
+    for i in range(x, x+size):
+        for j in range(y, y+size):
+            if paper[i][j] == 1:
+                count += 1
 
-idle = [paper]
+    if count in (0, size * size):
+        if count == 0:
+            white += 1
+        else:
+            blue += 1
+    else:
+        solve(x,y, size//2)
+        solve(x, y+size//2, size//2)
+        solve(x+size//2,y, size//2)
+        solve(x+size//2,y+size//2, size//2)
 
-while idle:
-    curr = idle.pop()
-    a,b,c,d = cutting(paper, n=n)
-    idle.append(a,b,c,d)
-    n //=2
 
-print(Counter.)
+solve(0,0,n)
+
+print(white)
+print(blue)

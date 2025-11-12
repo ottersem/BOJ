@@ -1,19 +1,42 @@
-import sys
-input = sys.stdin.readline
+from sys import stdin
+input = stdin.readline
 
-n, m, b = map(int, input().split())
-mapp = [list(map(int, input().split())) for _ in range(n)]
+n,m,b = map(int, input().split())
 
-def checking(std, height, n, m):
-    minus = []
-    plus = []
-    zero = []
+time = 0
+answer = -1
+
+height = [list(map(int, input().split())) for _ in range(n)]
+
+def action(target):
+    need = 0   
+    remove = 0 
     for i in range(n):
         for j in range(m):
-            num = int(std-height[n][m])
-            if num>0:
-                plus.append(num)
-            elif num==0:
-                zero.append(num)
-            else:
-                minus.append(num)
+            crt = height[i][j]
+            if crt > target:
+                remove += crt - target
+            elif crt < target:
+                need += target - crt
+    
+    if need > remove + b:
+        return -1
+    
+    time = remove * 2 + need
+    return time
+
+min_time = float('inf')
+best_h = 0
+
+max_h = max(max(row) for row in height)
+
+for h in range(0, max_h + 1):  
+    result = action(h)
+    if result != -1:
+        if result < min_time:
+            min_time = result
+            best_h = h
+        elif result == min_time and h > best_h:
+            best_h = h
+
+print(min_time, best_h)
