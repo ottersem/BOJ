@@ -1,15 +1,9 @@
-import heapq
-from sys import stdin
-input = stdin.readline
+import numpy as np
 
-q = []
+matrix = np.array([[170,76],[183,86],[181,78],[176,80]])
 
-n = int(input())
-for _ in range(n):
-    i = int(input())
-    if i == 0:
-        if len(q) == 0 : print(0)
-        else : print(heapq.heappop(q)[1])
-        continue
-    
-    heapq.heappush(q, (abs(i), i))
+res1 = matrix[matrix[:,1] >= 80]
+res2 = matrix[matrix[:,0] >= 180]
+
+print(res1)
+print(res2)
