@@ -1,20 +1,28 @@
-n = int(input())
-friends = []
+line = str(input())
 
-friends = [list(map(int, input().split())) for _ in range(n)]
+answer = [] 
 
-limitation = 100000
-reachable = []
+is_u = False
+is_f = False
 
-for x, s in friends:
-    pos = set()
-    for k in range(limitation // s+1):
-        pos.add(x+s*k)
-    reachable.append(pos)
+for char in line:
+    if char == 'U':
+        answer.append('U')
+        is_u = True
+        continue
+    if char == 'F':
+        if is_u == True:
+            is_f = True
+            answer.append('F')
+        else:
+            answer.append('-')
+        continue
+    
+    if is_u and not is_f:
+        answer.append('C')
+    elif is_u and is_f:
+        answer.append('-')
+    else:
+        answer.append('-')
 
-common = set.intersection(*reachable)
-
-if common:
-    print(min(common))
-else:
-    print(-1)
+print(''.join(answer))
